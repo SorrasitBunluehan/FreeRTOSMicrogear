@@ -1,14 +1,14 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
-
+#include "stdint.h"
 #define BUFFERSIZE 200
 #define MAXARG     10
 #define MAXCMDSIZE 16
 #define MAXARGSIZE 32
 
-#define uint8_t  unsigned char
-#define uint16_t unsigned int
+//~ #define uint8_t  unsigned char
+//~ #define uint16_t unsigned int
 
 	
         char cmdstopper;

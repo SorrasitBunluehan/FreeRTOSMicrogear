@@ -1,4 +1,5 @@
-.output/eagle/debug/obj/setup_task.o .output/eagle/debug/obj/setup_task.d : setup_task.c ../include/user_main.h ../include/uart.h \
+.output/eagle/debug/obj/microgear_task.o .output/eagle/debug/obj/microgear_task.d : microgear_task.c ../include/user_main.h \
+ ../include/uart.h \
  /home/moun/ESP8266_RTOS_SDK/include/freertos/FreeRTOS.h \
  /home/moun/esp-open-sdk/xtensa-lx106-elf/lib/gcc/xtensa-lx106-elf/4.8.5/include/stddef.h \
  /home/moun/ESP8266_RTOS_SDK/include/freertos/projdefs.h \
@@ -104,4 +105,4 @@
  ../include/var.h ../include/wifi_task.h ../include/error.h \
  ../include/microgear_task.h ../include/client1_task.h \
  ../include/setup_task.h ../include/client2_task.h ../include/parser.h \
- ../include/setup_task.h
+ ../include/microgear_task.h

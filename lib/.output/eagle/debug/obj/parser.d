@@ -22,4 +22,6 @@
  /home/moun/esp-open-sdk/xtensa-lx106-elf/xtensa-lx106-elf/include/alloca.h \
  /home/moun/esp-open-sdk/xtensa-lx106-elf/xtensa-lx106-elf/include/string.h \
  /home/moun/esp-open-sdk/xtensa-lx106-elf/xtensa-lx106-elf/include/sys/cdefs.h \
- /home/moun/esp-open-sdk/xtensa-lx106-elf/xtensa-lx106-elf/include/sys/string.h
+ /home/moun/esp-open-sdk/xtensa-lx106-elf/xtensa-lx106-elf/include/sys/string.h \
+ /home/moun/esp-open-sdk/xtensa-lx106-elf/lib/gcc/xtensa-lx106-elf/4.8.5/include/stdint.h \
+ /home/moun/esp-open-sdk/xtensa-lx106-elf/xtensa-lx106-elf/include/stdint.h

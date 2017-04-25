@@ -39,7 +39,7 @@ void client1_task(void *pvParameters) {
 		while(1){
 			if(xQueueReceive( client1_queue,&buf1, 100000) == pdPASS){
 				if(*buf1 == '\r'){			
-					os_printf("RAW data inside task: %s\n",cli1_buffer);	
+					//~ os_printf("RAW data inside task: %s\n",cli1_buffer);	
 					cli1_index=0;
 					char* cli1_argv[10];
 					tokenize(cli1_buffer, cli1_argv, MAXARG, cmdstopper, argdelimiter);
@@ -84,8 +84,11 @@ void connect1(char* ip, int port){
 }
 
 void disconn1(){
-	//os_printf("inside discon");
 	espconn_disconnect(&conn1);
+	conn1.type = ESPCONN_TCP;
+	conn1.state = ESPCONN_NONE;
+	conn1.proto.tcp = &tcp1;
+	conn1.proto.tcp->local_port=espconn_port();
 }
 
 void status1(){
@@ -180,6 +183,11 @@ void disconnectCB1(void *arg) {
 	if(push_mode == 1){
 		 os_printf("CLIENT1 DISCONN \n");
 	 }
+	//espconn_init();								//HAVE TO BE CALL UNLESS THE CONN WILL FAIL
+	conn1.type = ESPCONN_TCP;
+	conn1.state = ESPCONN_NONE;
+	conn1.proto.tcp = &tcp1;
+	conn1.proto.tcp->local_port=espconn_port();
 }
 
 

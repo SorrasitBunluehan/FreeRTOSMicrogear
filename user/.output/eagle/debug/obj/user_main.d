@@ -102,6 +102,5 @@
  ../include/ringbuf.h \
  /home/moun/ESP8266_RTOS_SDK/include/lwip/ipv4/lwip/inet.h \
  ../include/var.h ../include/wifi_task.h ../include/error.h \
- ../include/client1_task.h ../include/setup_task.h \
- ../include/client2_task.h ../include/microgear_task.h \
- ../include/parser.h
+ ../include/microgear_task.h ../include/client1_task.h \
+ ../include/setup_task.h ../include/client2_task.h ../include/parser.h
