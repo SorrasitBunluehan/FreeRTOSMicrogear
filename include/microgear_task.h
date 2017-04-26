@@ -37,7 +37,7 @@ void microgear_task(void *pvParameters);
 
 void mg_connect();
 void setup_token(char* token,char* token_secret);
-void config_netpie(char* appid, char*key, char*secret, char* alias);
+void config_netpie(char* appid_fn, char*key, char*secret, char* alias, char* token,char* token_secret);
 void mg_disconn();
 void set_alias(char* alias);
 void mg_publish(char* topic, char* payload);

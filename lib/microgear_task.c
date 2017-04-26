@@ -7,9 +7,11 @@
 #define SECRET        "YphWgyUI31q8sEMu6qtNrIPn1"
 #define ALIAS         "TEST"
 #define TOKEN         "d4Y9Jl5vk1p1hWfM"
-#define TOKENSECRET   "ZRnOjRgpCEkK2mSlowI8zjQpqILpf7wI"ma
+#define TOKENSECRET   "ZRnOjRgpCEkK2mSlowI8zjQpqILpf7wI"
 
 extern xQueueHandle microgear_queue;
+
+
 
 void onConnected(char *attribute, uint8_t* msg, uint16_t msglen) {
     os_printf("OK\n"); 
@@ -17,19 +19,24 @@ void onConnected(char *attribute, uint8_t* msg, uint16_t msglen) {
 
 //~ /*	<|NETPIE ON MESSAGE HANDLER CALLBACK|> */
 void onMsghandler(char *topic, uint8_t* msg, uint16_t msglen) {
-	memset(&str,0,sizeof(struct MgStruct));	
+	
+	memset(&str,0,sizeof(struct MgStruct));
 	memcpy(str.msg,msg,msglen);
 	strcpy(str.topic,topic);
+
+	//~ os_printf("\n\nMsg is: %s\n",str.msg);
+	//~ os_printf("Topic is: %s\n",str.topic);
 	str.msglen = msglen;
+	
 	mg_buf->add(mg_buf,&str);
-   
-   if(push_mode == 1){
-			int buffer_ele = mg_buf->numElements(mg_buf);
-		if(buffer_ele != 0){
-			mg_buf->pull(mg_buf,&str_pull);
-			os_printf("%s:%s\r\n",str_pull.topic,str_pull.msg);
-		}
-	}
+
+   //~ if(push_mode == 1){
+			//~ int buffer_ele = mg_buf->numElements(mg_buf);
+		//~ if(buffer_ele != 0){
+			//~ mg_buf->pull(mg_buf,&str_pull);
+			//~ os_printf("%s:%s\r\n",str_pull.topic,str_pull.msg);
+		//~ }
+	//~ }
 }
 
 
@@ -38,21 +45,23 @@ void microgear_task(void *pvParameters) {
 		while(1){
 			if(xQueueReceive( microgear_queue,&buf3, 100000) == pdPASS){
 				if(*buf3 == '\r'){			
-					os_printf("RAW data inside task: %s\n",mg_buffer);	
+					//~ os_printf("RAW data inside task: %s\n",mg_buffer);	
 					mg_index=0;
 					char* mg_argv[10];
 					tokenize(mg_buffer, mg_argv, MAXARG, cmdstopper, argdelimiter);
 					char *comm = command();
-					os_printf("arg0 = %s\n",comm);
-					os_printf("arg1 = %s\n",argString(1,mg_argv));
-					os_printf("arg2 = %s\n",argString(2,mg_argv));
-					os_printf("arg3 = %s\n",argString(3,mg_argv));
-					os_printf("arg3 = %s\n",argString(4,mg_argv));
+					//~ os_printf("\narg0 = %s\n",comm);
+					//~ os_printf("arg1 = %s\n",argString(1,mg_argv));
+					//~ os_printf("arg2 = %s\n",argString(2,mg_argv));
+					//~ os_printf("arg3 = %s\n",argString(3,mg_argv));
+					//~ os_printf("arg4 = %s\n",argString(4,mg_argv));
+					//~ os_printf("arg5 = %s\n",argString(5,mg_argv));
+					//~ os_printf("arg6 = %s\n\n",argString(6,mg_argv));
 					
 					if(strcmp(comm,CONNECT_TO_NETPIE)==0) mg_connect();
 					if(strcmp(comm,DISCONNECT_FROM_NETPIE)==0)	mg_disconn();	
-					if(strcmp(comm,SETUP_TOKEN)==0) setup_token((argString(1,mg_argv)),(argString(2,mg_argv)));
-					if(strcmp(comm,INIT_MICROGEAR)==0) config_netpie(argString(1,mg_argv), argString(2,mg_argv), argString(3,mg_argv), argString(4,mg_argv));	
+					//~ if(strcmp(comm,SETUP_TOKEN)==0) setup_token((argString(1,mg_argv)),(argString(2,mg_argv)));
+					if(strcmp(comm,CONFIG_MICROGEAR)==0) config_netpie(argString(1,mg_argv), argString(2,mg_argv), argString(3,mg_argv), argString(4,mg_argv),argString(5,mg_argv),argString(6,mg_argv));	
 					if(strcmp(comm,SET_ALIAS_NAME)==0)	set_alias(argString(1,mg_argv));		
 					if(strcmp(comm,PUBLISH)==0)	mg_publish(argString(1,mg_argv), argString(2,mg_argv));	
 					if(strcmp(comm,SUBSCRIBE)==0)	mg_subscribe(argString(1,mg_argv));		
@@ -73,8 +82,7 @@ void microgear_task(void *pvParameters) {
 
 
 void mg_connect(){
-	os_printf("Inside connect\n");
-	os_printf("App is: %s",appid);
+
 	microgear_on(&mg, CONNECTED, onConnected);
 	microgear_on(&mg, MESSAGE, onMsghandler);
 	microgear_connect(&mg,appid);
@@ -82,17 +90,36 @@ void mg_connect(){
 }
 
 void setup_token(char* token,char* token_secret){
+	//~ strcat(token,'\0');
+	//~ strcat(token_secret,'\0');
+	//~ if(strcmp(token,TOKEN) == 0) os_printf("Token match\n");
+	//~ if(strcmp(token_secret,TOKENSECRET) == 0) os_printf("Token secret match\n");
 	microgear_setToken(&mg, TOKEN, TOKENSECRET, NULL);
+	//~ microgear_setToken(&mg, token, token_secret, NULL);
 	if(push_mode == 1){
+		int in;
+		os_printf("\n\n");
+		//~ while(token[in] != '\0')
+		//~ {
+			//~ os_printf("Token: %c\n",token[in]);
+			//~ in++;
+		//~ }
+		//~ in = 0;
+		//~ while(token_secret[in] != '\0'){
+			//~ os_printf("Token secret: %c\n",token_secret[in]);
+		//~ in++;
+		//~ }
 		 os_printf("Token: %s\nToken Secret: %s\n",token,token_secret);
 	 }
 }
 
-void config_netpie(char* appid_fn, char*key, char*secret, char* alias){
-	//~ strcpy(appid,appid_fn);
-	microgear_init(&mg, KEY, SECRET, ALIAS); 
+void config_netpie(char* appid_fn, char*key, char*secret, char* alias, char* token,char* token_secret){
+	strcpy(appid,appid_fn);
+	//~ microgear_init(&mg, KEY, SECRET, ALIAS); 
+	microgear_setup(&mg, token, token_secret, NULL, key, secret, alias);
+	//~ microgear_init(&mg, key, secret, alias); 
 	if(push_mode == 1){
-		 os_printf("Appid: %s\nKey: %s\nSecret: %s\nAlias: %s\n",appid,key,secret,alias);	
+		 os_printf("Appid: %s\nKey: %s\nSecret: %s\nAlias: %s\nToken: %s\nToken Secret: %s\n",appid_fn,key,secret,alias,token,token_secret);	
 	 }
 }
 

@@ -105,9 +105,9 @@ struct PubOpt {
 uint16_t strxcpy(char*, char*, uint16_t);
 
 bool isConnected(Microgear*);
-
-void microgear_init(Microgear*, char* key, char* secret, char* alias);
-void microgear_setToken(Microgear*, char* token, char* tokensecret, char *endpoint);
+void microgear_init(Microgear*, char *endpoint);
+//~ void microgear_init(Microgear*, char* key, char* secret, char* alias);
+//~ void microgear_setToken(Microgear*, char* token, char* tokensecret, char *endpoint);
 
 void microgear_connect(Microgear*, char*);
 void microgear_disconnect(Microgear*);
@@ -122,4 +122,5 @@ int microgear_unsubscribe(Microgear*, char*);
 
 void microgear_on(Microgear*, unsigned char,void (* callback)(char*, uint8_t*, uint16_t));
 
+void microgear_setup(Microgear *mg, char *token, char* tokensecret, char *endpoint, char *key, char *secret, char *alias);
 #endif

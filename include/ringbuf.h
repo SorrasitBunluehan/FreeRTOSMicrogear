@@ -10,7 +10,7 @@
 #include "stdlib.h"
 
 #define TOPIC_SIZE 50
-#define MAX_MSG_LENGTH 1024
+#define MAX_MSG_LENGTH 256
 
 #ifndef bool
     #define bool uint8_t
@@ -63,8 +63,8 @@ int RingBufIncrStart(RingBuf *self);
 int RingBufAdd(RingBuf *self, const void *object);
 void *RingBufPeek(RingBuf *self, unsigned int num);
 void *RingBufPull(RingBuf *self, void *object);
-bool RingBufIsFull(RingBuf *self);
-bool RingBufIsEmpty(RingBuf *self);
+uint8_t RingBufIsFull(RingBuf *self);
+uint8_t RingBufIsEmpty(RingBuf *self);
 unsigned int RingBufNumElements(RingBuf *self);
 
 #endif

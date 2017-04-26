@@ -1,4 +1,5 @@
 #include "ringbuf.h"
+
 #include <string.h>
 
 RingBuf *RingBuf_new(int size, int len)
@@ -78,12 +79,15 @@ int RingBufIncrStart(RingBuf *self)
 // Add an object struct to RingBuf
 int RingBufAdd(RingBuf *self, const void *object)
 {
+		//~ os_printf("\n\n\nBefore broken\n\n\n\n\n\n");
 	int index;
 	index = self->next_end_index(self);
 	//if not full
 	if (index >= 0)
 	{
+		
 		memcpy(self->buf + index*self->size, object, self->size);
+		   //~ os_printf("\n\n\nAfter broken\n\n\n\n\n\n");	
 		if (!self->isEmpty(self)) self->incr_end_index(self);
 		self->elements++;
 	}
@@ -126,17 +130,17 @@ unsigned int RingBufNumElements(RingBuf *self)
 }
 
 // Returns true if buffer is full
-bool RingBufIsFull(RingBuf *self)
+uint8_t RingBufIsFull(RingBuf *self)
 {
-	bool ret;
+	uint8_t ret;
     ret = self->elements == self->len;
 	return ret;
 }
 
 // Returns true if buffer is empty
-bool RingBufIsEmpty(RingBuf *self)
+uint8_t RingBufIsEmpty(RingBuf *self)
 {
-	bool ret;
+	uint8_t ret;
 	ret = !self->elements;
 	return ret;
 }

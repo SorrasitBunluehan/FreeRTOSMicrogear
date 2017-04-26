@@ -3,10 +3,10 @@
 xSemaphoreHandle *WifiSemaphore = NULL;
 PubOpt DefaultPubOpt = {false};
 
-void microgear_init(Microgear *mg, char *key, char *secret, char *alias) {
-    mg->key = key;
-    mg->secret = secret;
-    mg->alias = alias;
+void microgear_init(Microgear *mg, char *endpoint) {
+    //~ mg->key = key;
+    //~ mg->secret = secret;
+    //~ mg->alias = alias;
     mg->cb_connected = NULL;
     mg->cb_absent = NULL;
     mg->cb_present = NULL;
@@ -16,17 +16,12 @@ void microgear_init(Microgear *mg, char *key, char *secret, char *alias) {
     mg->mqtttask = NULL;
     mg->network = NULL;
     mg->ps_queue = xQueueCreate(PUBSUBQUEUE_LENGTH, sizeof(PubSubQueueMsg));
-}
-
-void microgear_setWifiSemaphore(xSemaphoreHandle *WifiReady) {
-    WifiSemaphore = WifiReady; 
-}
-
-void microgear_setToken(Microgear *mg, char *token, char* tokensecret, char *endpoint) {
-    mg->token = token;
-    mg->tokensecret = tokensecret;
-    mg->host = GBDEFAULTHOST;
+    
+     mg->host = GBDEFAULTHOST;
     mg->port = GBPORT;
+    
+    os_printf("Token is: %s",mg->token);
+     os_printf("Token secret is: %s",mg->token);
 
     if (endpoint != NULL) {
         char *p;
@@ -37,7 +32,41 @@ void microgear_setToken(Microgear *mg, char *token, char* tokensecret, char *end
             mg->port = atoi(p+1);
         }
     }
- }
+}
+
+void microgear_setWifiSemaphore(xSemaphoreHandle *WifiReady) {
+    WifiSemaphore = WifiReady; 
+}
+
+
+void microgear_setup(Microgear *mg, char *token, char* tokensecret, char *endpoint, char *key, char *secret, char *alias){
+	mg->key = key;
+    mg->secret = secret;
+    mg->alias = alias;
+	mg->token = token;
+    mg->tokensecret = tokensecret;
+}
+
+
+//~ void microgear_setToken(Microgear *mg, char *token, char* tokensecret, char *endpoint) {
+    //~ mg->token = token;
+    //~ mg->tokensecret = tokensecret;
+    //~ mg->host = GBDEFAULTHOST;
+    //~ mg->port = GBPORT;
+    
+    //~ os_printf("Token is: %s",mg->token);
+     //~ os_printf("Token secret is: %s",mg->token);
+
+    //~ if (endpoint != NULL) {
+        //~ char *p;
+        //~ for (p = endpoint; *p!='\0' && *p!=':' ;p++);
+        //~ if (*p == ':') {
+            //~ *p = '\0';
+            //~ mg->host = endpoint;
+            //~ mg->port = atoi(p+1);
+        //~ }
+    //~ }
+ //~ }
 
 uint16_t strxcpy(char *dest, char *src, uint16_t max) {
     if (strlen(src) <= max) {

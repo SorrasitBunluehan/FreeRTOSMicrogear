@@ -26,8 +26,8 @@
 
 
 //Setup task format
-#define ECHOMODE "ATE"																									//ATE0 (For turn off echo), ATE1 (Turn on echo)
-#define PUSHMODE "ATP"																										//ATP1 (Push message on),ATP0 (PUSH message off)
+#define ECHOMODE "ATE"																									//ATE=0 (For turn off echo), ATE=1 (Turn on echo)
+#define PUSHMODE "ATP"																										//ATP=1 (Push message on),ATP=0 (PUSH message off)
 
 //Client 1 task
 #define CONNECT_TO_SERVER1_BY_CLIENT1 "AT+CCS1"											//AT+CCS1 "<IP>",<PORT>
@@ -58,7 +58,7 @@
 //~ #define CHECKSTATUS_NETPIE "AT+MGCN?"																	//AT+MGCN?
 #define DISCONNECT_FROM_NETPIE "AT+MGDC\r"															//AT+MGDC  
 #define SETUP_TOKEN "AT+MGST"																					//AT+MGST="d4Y9Jl5vk1p1hWfM","ZRnOjRgpCEkK2mSlowI8zjQpqILpf7wI"\r
-#define INIT_MICROGEAR "AT+MGIN"																				//AT+MGIN "HelloNetpie1","YhtHPvlmMxL5yJB","YphWgyUI31q8sEMu6qtNrIPn1","Light_control"
+#define CONFIG_MICROGEAR "AT+MGCF"																				//AT+MGCF "HelloNetpie1","YhtHPvlmMxL5yJB","YphWgyUI31q8sEMu6qtNrIPn1","Light_control"
 #define SET_ALIAS_NAME "AT+MGSA"																				//AT+MGSA "ALIAS_NEW"
 #define PUBLISH "AT+MGP"																								//AT+MGP "<TOPIC>","<PAYLOAD>"
 #define SUBSCRIBE "AT+MGS"																							//AT+MGS "<TOPIC>"  
