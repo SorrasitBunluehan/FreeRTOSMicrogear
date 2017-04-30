@@ -7,20 +7,10 @@ extern xQueueHandle client2_queue;
 
 /* <|DNS callback for conn2 if there is no maping ip in cache|> */
 void ResolveDNS_for_conn2( const char *name, ip_addr_t *ipaddr, void *arg ){
-	if(push_mode == 1) {
-		os_printf("Can't find ip in cache system. Asking from DNS server\n"); 		 
-	}
-
 	if(ipaddr == NULL){
-		switch(push_mode){
-			case 0: os_printf("Error: %d \n",NO_LOOKUP_IP_FOUND); break;
-			case 1: os_printf("Unable to address from %s",name); break;
-		}
+		os_printf("Unable to resolved address from %s",name); 
 	}else{
 		memcpy(conn2.proto.tcp->remote_ip, ipaddr, 4);
-		if(push_mode ==1) {
-			os_printf("Connecting . . .\n");
-		}
 		switch(conn2.state){
 			case ESPCONN_CONNECT: os_printf("Error: %d \n", CONN_NOT_READY_TO_CONNECT); break;
 			case ESPCONN_NONE: espconn_connect(&conn2); break;
@@ -66,26 +56,24 @@ void client2_task(void *pvParameters) {
 }
 
 void connect2(char* ip, int port){
-	os_printf("Port is : %d\n",port);
-	os_printf("IP: %s\n",ip);
+	if(echo_mode ==1) os_printf("%s=\"%s\",%d\n",CONNECT_TO_SERVER2_BY_CLIENT2,ip,port);
 	conn2.proto.tcp->remote_port = port;
 	if(espconn_gethostbyname(&conn2, ip, &HostResolve_Ip2, ResolveDNS_for_conn2) == ESPCONN_OK){
 		memcpy(conn2.proto.tcp->remote_ip, &HostResolve_Ip2, 4);
 		switch(conn2.state){
 			case ESPCONN_CONNECT: os_printf("Error: %d \n", CONN_NOT_READY_TO_CONNECT); break;
-			case ESPCONN_NONE: os_printf("Connecting\n"); espconn_connect(&conn2); break;
+			case ESPCONN_NONE:  espconn_connect(&conn2); break;
 			case ESPCONN_LISTEN: os_printf("Error: %d \n", CONN_NOT_READY_TO_CONNECT); break;
 			case ESPCONN_WAIT: os_printf("Error: %d \n", CONN_NOT_READY_TO_CONNECT); break;
 			case ESPCONN_WRITE: os_printf("Error: %d \n", CONN_NOT_READY_TO_CONNECT); break;
 			case ESPCONN_READ: os_printf("Error: %d \n", CONN_NOT_READY_TO_CONNECT); break;
-			case ESPCONN_CLOSE: os_printf("Connecting\n");  espconn_connect(&conn2);   break;
+			case ESPCONN_CLOSE: espconn_connect(&conn2);   break;
 		}
 	}
 }
 
 void disconn2(){
-	//os_printf("inside discon");
-	
+	if(echo_mode==1) os_printf("%s\n",DISCONNECT_FROM_SERVER2);
 	espconn_disconnect(&conn2);
 	conn2.type = ESPCONN_TCP;
 	conn2.state = ESPCONN_NONE;
@@ -94,8 +82,7 @@ void disconn2(){
 }
 
 void status2(){
-	if(echo_mode==1) os_printf("%s ",CHECKSTATUS_CLIENT2	);
-	
+	if(echo_mode==1) os_printf("%s \n",CHECKSTATUS_CLIENT2	);
 	switch(conn2.state){
 		case ESPCONN_CONNECT: os_printf("OK\n"); break;
 		case ESPCONN_NONE: os_printf("NONE\n"); break;
@@ -108,6 +95,7 @@ void status2(){
 }
 
 void read2(int sending_bytes){
+	if(echo_mode==1) os_printf("%s=\"%d\"\n",READ_DATA_FROM_CLIENT2_BUFFER,sending_bytes);
 	int x;
 	char c;
 	int buffer_ele = client2_buf->numElements(client2_buf);
@@ -128,6 +116,7 @@ void read2(int sending_bytes){
 	
 	
 void print2(char* payload){
+	if(echo_mode==1) os_printf("%s=\"%s\"\n",PRINT_TO_SERVER2,payload);
 		int index=0;
 		while((int)payload[index] != 0){
 			//~ os_printf("Payload : %d\n",(int)payload[index]);
@@ -146,14 +135,15 @@ void read_arduino2(int sending_bytes){
 	char c;
 	int buffer_ele = client2_buf->numElements(client2_buf);
 	if(buffer_ele != 0){
+		os_printf("%c",162);
 		if(buffer_ele > sending_bytes){
-			 os_printf("%c",32| sending_bytes);
+			 os_printf("%c",sending_bytes);
 			for(x = 0;x<sending_bytes;x++){   					
 					client2_buf->pull(client2_buf,&c);
 					os_printf("%c",c);
 			}
 		}else {
-			os_printf("%c",32| buffer_ele);				
+			os_printf("%c",buffer_ele);				
 			for(x = 0;x<buffer_ele;x++){   																
 					client2_buf->pull(client2_buf,&c);
 					os_printf("%c",c);
@@ -166,9 +156,6 @@ void read_arduino2(int sending_bytes){
 /* <|DATA RECEIVED CALLBACK (FOR CLIENT 2)|> */ 
 void recv_cb2(void *arg, char *pData, unsigned short len){
 	int i;
-	if(push_mode == 1) {
-		os_printf("Received data from server 2");
-	}
 	for(i=0;i<len;i++)client2_buf->add(client2_buf,(pData+i));
 }
 
@@ -182,9 +169,6 @@ void errorCB2(void *arg, sint8 err) {
 
 /*	<|CLIENT2 DISCONNECT CALLBACK|> */
 void disconnectCB2(void *arg) {
-	if(push_mode == 1){
-		 os_printf("CLIENT2 DISCONN \n");
-	 }
 	 conn2.type = ESPCONN_TCP;
 	conn2.state = ESPCONN_NONE;
 	conn2.proto.tcp = &tcp2;

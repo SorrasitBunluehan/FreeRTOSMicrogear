@@ -43,13 +43,14 @@ extern  xQueueHandle wifi_queue;
  * 
  **********************************************************************/
 void checkstatuswifi() {
+		if(echo_mode==1) os_printf("%s\n",CHECKSTATUS_WIFI);
 		uint8_t status; 
 		status = wifi_station_get_connect_status();
 		if(status == STATION_GOT_IP){
 			wifi_get_ip_info(STATION_IF, &ipconfig);
 			os_printf("CONNECTED %d.%d.%d.%d\n", IP2STR(&ipconfig.ip));
 		}else{
-			os_printf("DISCONNECTED\n");
+			os_printf("NOTCONNECTED\n");
 		}
 }
 
@@ -58,6 +59,7 @@ void checkstatuswifi() {
  * 
  **********************************************************************/
 void setupwifi(char* ssid, char* pass){
+	if(echo_mode==1) os_printf("%s=\"%s\",\"%s\"\n",SETUPWIFI,ssid,pass);
 	strcpy(ssid,ssid);
 	strcpy(password,pass);
 	xSemaphoreGive(SetWifi);
@@ -88,11 +90,11 @@ void setupwifi(char* ssid, char* pass){
 		--retries;
 	}
 	
-	if ((status = wifi_station_get_connect_status()) == STATION_GOT_IP) {
-		wifi_get_ip_info(STATION_IF, &ipconfig);
-		os_printf("CONNECTED %d.%d.%d.%d\n", IP2STR(&ipconfig.ip));
-		vTaskDelay(1000 / portTICK_RATE_MS);
-	}
+	//~ if ((status = wifi_station_get_connect_status()) == STATION_GOT_IP) {
+		//~ wifi_get_ip_info(STATION_IF, &ipconfig);
+		//~ os_printf("CONNECTED %d.%d.%d.%d\n", IP2STR(&ipconfig.ip));
+		//~ vTaskDelay(1000 / portTICK_RATE_MS);
+	//~ }
 
 	
 }

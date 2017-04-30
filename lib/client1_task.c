@@ -7,20 +7,10 @@ extern xQueueHandle client1_queue;
 
 /* <|DNS callback for conn1 if there is no maping ip in cache|> */
 void ResolveDNS_for_conn1( const char *name, ip_addr_t *ipaddr, void *arg ){
-	if(push_mode == 1) {
-		os_printf("Can't find ip in cache system. Asking from DNS server\n"); 		 
-	}
-
 	if(ipaddr == NULL){
-		switch(push_mode){
-			case 0: os_printf("Error: %d \n",NO_LOOKUP_IP_FOUND); break;
-			case 1: os_printf("Unable to address from %s",name); break;
-		}
+		os_printf("Unable to resolved address from %s",name); 
 	}else{
 		memcpy(conn1.proto.tcp->remote_ip, ipaddr, 4);
-		if(push_mode ==1) {
-			os_printf("Connecting . . .\n");
-		}
 		switch(conn1.state){
 			case ESPCONN_CONNECT: os_printf("Error: %d \n", CONN_NOT_READY_TO_CONNECT); break;
 			case ESPCONN_NONE: espconn_connect(&conn1); break;
@@ -66,24 +56,24 @@ void client1_task(void *pvParameters) {
 }
 
 void connect1(char* ip, int port){
-	os_printf("Port is : %d\n",port);
-	os_printf("IP: %s\n",ip);
+	if(echo_mode ==1) os_printf("%s=\"%s\",%d\n",CONNECT_TO_SERVER1_BY_CLIENT1,ip,port);
 	conn1.proto.tcp->remote_port = port;
 	if(espconn_gethostbyname(&conn1, ip, &HostResolve_Ip1, ResolveDNS_for_conn1) == ESPCONN_OK){
 		memcpy(conn1.proto.tcp->remote_ip, &HostResolve_Ip1, 4);
 		switch(conn1.state){
 			case ESPCONN_CONNECT: os_printf("Error: %d \n", CONN_NOT_READY_TO_CONNECT); break;
-			case ESPCONN_NONE: os_printf("Connecting\n"); espconn_connect(&conn1); break;
+			case ESPCONN_NONE:  espconn_connect(&conn1); break;
 			case ESPCONN_LISTEN: os_printf("Error: %d \n", CONN_NOT_READY_TO_CONNECT); break;
 			case ESPCONN_WAIT: os_printf("Error: %d \n", CONN_NOT_READY_TO_CONNECT); break;
 			case ESPCONN_WRITE: os_printf("Error: %d \n", CONN_NOT_READY_TO_CONNECT); break;
 			case ESPCONN_READ: os_printf("Error: %d \n", CONN_NOT_READY_TO_CONNECT); break;
-			case ESPCONN_CLOSE: os_printf("Connecting\n");  espconn_connect(&conn1);   break;
+			case ESPCONN_CLOSE: espconn_connect(&conn1);   break;
 		}
 	}
 }
 
 void disconn1(){
+	if(echo_mode==1) os_printf("%s\n",DISCONNECT_FROM_SERVER1);
 	espconn_disconnect(&conn1);
 	conn1.type = ESPCONN_TCP;
 	conn1.state = ESPCONN_NONE;
@@ -92,7 +82,7 @@ void disconn1(){
 }
 
 void status1(){
-	if(echo_mode==1) os_printf("%s ",CHECKSTATUS_CLIENT1	);
+	if(echo_mode==1) os_printf("%s \n",CHECKSTATUS_CLIENT1	);
 	
 	switch(conn1.state){
 		case ESPCONN_CONNECT: os_printf("OK\n"); break;
@@ -106,6 +96,7 @@ void status1(){
 }
 
 void read1(int sending_bytes){
+	if(echo_mode==1) os_printf("%s=\"%d\"\n",READ_DATA_FROM_CLIENT1_BUFFER,sending_bytes);
 	int x;
 	char c;
 	int buffer_ele = client1_buf->numElements(client1_buf);
@@ -126,6 +117,7 @@ void read1(int sending_bytes){
 	
 	
 void print1(char* payload){
+		if(echo_mode==1) os_printf("%s=\"%s\"\n",PRINT_TO_SERVER1,payload);
 		int index=0;
 		while((int)payload[index] != 0){
 			//~ os_printf("Payload : %d\n",(int)payload[index]);
@@ -140,18 +132,22 @@ void print1(char* payload){
 }
 
 void read_arduino1(int sending_bytes){
+
 	int x;
 	char c;
 	int buffer_ele = client1_buf->numElements(client1_buf);
 	if(buffer_ele != 0){
-		if(buffer_ele > sending_bytes){
-			 os_printf("%c",32| sending_bytes);
+		os_printf("%c",161);
+		if(buffer_ele > sending_bytes ){
+			 //~ os_printf("%c",32| sending_bytes);
+			 os_printf("%c",sending_bytes);
 			for(x = 0;x<sending_bytes;x++){   					
 					client1_buf->pull(client1_buf,&c);
 					os_printf("%c",c);
 			}
 		}else {
-			os_printf("%c",32| buffer_ele);				
+			//~ os_printf("%c",32| buffer_ele);	
+			os_printf("%c",buffer_ele);				
 			for(x = 0;x<buffer_ele;x++){   																
 					client1_buf->pull(client1_buf,&c);
 					os_printf("%c",c);
@@ -164,9 +160,6 @@ void read_arduino1(int sending_bytes){
 /* <|DATA RECEIVED CALLBACK (FOR CLIENT 1)|> */ 
 void recv_cb1(void *arg, char *pData, unsigned short len){
 	int i;
-	if(push_mode == 1) {
-		os_printf("Received data from server 1");
-	}
 	for(i=0;i<len;i++)client1_buf->add(client1_buf,(pData+i));
 }
 
@@ -180,10 +173,6 @@ void errorCB1(void *arg, sint8 err) {
 
 /*	<|CLIENT1 DISCONNECT CALLBACK|> */
 void disconnectCB1(void *arg) {
-	if(push_mode == 1){
-		 os_printf("CLIENT1 DISCONN \n");
-	 }
-	//espconn_init();								//HAVE TO BE CALL UNLESS THE CONN WILL FAIL
 	conn1.type = ESPCONN_TCP;
 	conn1.state = ESPCONN_NONE;
 	conn1.proto.tcp = &tcp1;

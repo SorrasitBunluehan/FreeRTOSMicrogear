@@ -42,6 +42,7 @@ extern xQueueHandle xQueueUART;
  int echo_mode;
  int push_mode;
 
+unsigned long current_time,past_time;
  
  /* <|MQTT Variables declaration|>
  *		@str -> MgStruct structure type keep all information of arrival message (topic,msg,msglen)

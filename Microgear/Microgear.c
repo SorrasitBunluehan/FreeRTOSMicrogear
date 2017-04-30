@@ -280,7 +280,7 @@ LOCAL void ICACHE_FLASH_ATTR mqtt_task(void *pvParameters) {
             os_printf("mqtt_password = %s\n", mqtt_password);
         #endif
 
-        dmsg_printf("(Re)connecting to MQTT server %s : %d... ", mg->host, mg->port);
+        //~ dmsg_printf("(Re)connecting to MQTT server %s : %d... ", mg->host, mg->port);
 
         ret = ConnectNetwork(mg->network, mg->host, mg->port);
 

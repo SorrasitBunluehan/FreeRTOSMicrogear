@@ -32,20 +32,19 @@ void setup_task(void *pvParameters) {
 }
 
 	void setpushmode(int n){
-		
+		if(echo_mode==1) os_printf("%s=%d\n",PUSHMODE,n);
 		push_mode = n;
-		 switch (push_mode){
-			case 0: os_printf("Push mode: 0\n"); break;
-			case 1: os_printf("Push mode: 1\n"); break;		 
-		}
+		 //~ switch (push_mode){
+			//~ case 0: os_printf("Push mode: 0\n"); break;
+			//~ case 1: os_printf("Push mode: 1\n"); break;		 
+		//~ }
 	}
 	
 	void setechomode(int n){
+		if(echo_mode==1) os_printf("%s=%d\n",ECHOMODE,n);
 		echo_mode = n;
-		switch (echo_mode){
-			case 0: os_printf("Echo mode: 0\n"); break;
-			case 1: os_printf("Echo mode: 1\n");  break;		 
-		}
-		
-		
+		//~ switch (echo_mode){
+			//~ case 0: os_printf("Echo mode: 0\n"); break;
+			//~ case 1: os_printf("Echo mode: 1\n");  break;		 
+		//~ }
 	}

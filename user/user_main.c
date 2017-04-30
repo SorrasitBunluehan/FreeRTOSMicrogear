@@ -14,12 +14,8 @@
  * **********************************/	
 void read_sr(void *pvParameters) {
 	while(1){
-		//~ current_time = system_get_time();
-		//~ if(current_time - past_time > 2000000){
-				//~ //os_printf("reset message index \n");
-				//~ past_time = current_time;
-				//~ message_index = 0;
-		//~ }
+		current_time = system_get_time();
+		
 		
 		if(xQueueReceive(xQueueUART,(void *)&xQueueHandleUart,0) == pdPASS){
 			message_sr[message_index++] = xQueueHandleUart.param;
@@ -27,7 +23,7 @@ void read_sr(void *pvParameters) {
 			
 			
 			if(xQueueHandleUart.param == 13){
-				//~ past_time = system_get_time();
+				past_time = system_get_time();
 				//~ os_printf("Raw Data: %s\n", message_sr);
 				int i;
 				
@@ -82,7 +78,13 @@ void read_sr(void *pvParameters) {
 				}
 				message_index = 0; 
 			}
+		}else if(current_time - past_time > 500000){
+				//~ os_printf("reset message index \n");
+				past_time = current_time;
+				message_index = 0;
 		}
+		
+		
 		vTaskDelay(10 / portTICK_RATE_MS);
 	}
 	vTaskDelete( NULL );
