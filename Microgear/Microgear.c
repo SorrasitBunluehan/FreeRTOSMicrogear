@@ -332,7 +332,7 @@ LOCAL void ICACHE_FLASH_ATTR mqtt_task(void *pvParameters) {
                                     
                                     break;
                             case PSQ_SUBSCRIBE   :
-									os_printf("Sub success");
+									
                                     ret = MQTTSubscribe(&(mg->client), msg.topic, QOS0, defaultMsgHandler);
                                     if (ret != SUCCESS) stopReadQueue = true;
                                     break;

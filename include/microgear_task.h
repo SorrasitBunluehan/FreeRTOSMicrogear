@@ -46,6 +46,8 @@ void mg_unscribe(char* topic);
 void mg_writefeed(int feedmode, char* feedname, char* feeddata, char* apikey);
 void mg_chat(char* device_name, char* payload);
 void mg_pull_buf();
+void mg_pull_buf_to_arduino();
+int size(char *ptr);
 
 
 

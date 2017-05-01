@@ -20,6 +20,7 @@ void onMsghandler(char *topic, uint8_t* msg, uint16_t msglen) {
 	mg_buf->add(mg_buf,&str);
 
    if(push_mode == 1){
+	   os_printf("Incomming message from Netpie: ");
 			int buffer_ele = mg_buf->numElements(mg_buf);
 		if(buffer_ele != 0){
 			mg_buf->pull(mg_buf,&str_pull);
@@ -39,7 +40,7 @@ void microgear_task(void *pvParameters) {
 					char* mg_argv[10];
 					tokenize(mg_buffer, mg_argv, MAXARG, cmdstopper, argdelimiter);
 					char *comm = command();
-					//~ os_printf("\narg0 = %s\n",comm);
+					//~ os_printf("\arg0 = %s\n",comm);
 					//~ os_printf("arg1 = %s\n",argString(1,mg_argv));
 					//~ os_printf("arg2 = %s\n",argString(2,mg_argv));
 					//~ os_printf("arg3 = %s\n",argString(3,mg_argv));
@@ -56,7 +57,8 @@ void microgear_task(void *pvParameters) {
 					if(strcmp(comm,SUBSCRIBE)==0)	mg_subscribe(argString(1,mg_argv));		
 					if(strcmp(comm,UNSUBSCRIBE)==0) mg_unscribe(argString(1,mg_argv));		
 					if(strcmp(comm,CHAT)==0) mg_chat(argString(1,mg_argv), argString(2,mg_argv));
-					if(strcmp(comm,PULL_MESSAGE)==0)	mg_pull_buf(argString(1,mg_argv));	
+					if(strcmp(comm,PULL_MESSAGE)==0)	mg_pull_buf();	
+					if(strcmp(comm,PULL_MESSAGE_TO_ARDUINO_LIB)==0) mg_pull_buf_to_arduino();	
 					if(strcmp(comm,WRITE_FEED)==0)mg_writefeed(argInt(1,mg_argv), argString(2,mg_argv), argString(3,mg_argv), argString(4,mg_argv));
 					
 				}else{
@@ -133,12 +135,50 @@ void mg_chat(char* device_name, char* payload){
 
 
 void mg_pull_buf(){
+	
 	if(echo_mode==1) os_printf("%s\n",PULL_MESSAGE);
 	int buffer_ele = mg_buf->numElements(mg_buf);
 	if(buffer_ele != 0){
 		mg_buf->pull(mg_buf,&str_pull);
 		os_printf("%s:%s\r\n",str_pull.topic,str_pull.msg);
 	}
+}
+
+void mg_pull_buf_to_arduino(){
+	if(echo_mode==1) os_printf("%s\n",PULL_MESSAGE);
+	int buffer_ele = mg_buf->numElements(mg_buf);
+	if(buffer_ele != 0){
+		uart0_putchar(163);
+		mg_buf->pull(mg_buf,&str_pull);
+		
+		char msgn[100];
+		msgn[0]='\0';
+		strcat(msgn,str_pull.topic);
+		strcat(msgn,":");
+		strcat(msgn,str_pull.msg);
+		
+		uart0_putchar((char)sizeof(msgn));
+		uart0_puts(msgn);
+	}
+}
+
+int size(char *ptr)
+{
+    //variable used to access the subsequent array elements.
+    int offset = 0;
+    //variable that counts the number of elements in your array
+    int count = 0;
+
+    //While loop that tests whether the end of the array has been reached
+    while (*(ptr + offset) != '\0')
+    {
+        //increment the count variable
+        ++count;
+        //advance to the next element of the array
+        ++offset;
+    }
+    //return the size of the array
+    return count;
 }
 
 

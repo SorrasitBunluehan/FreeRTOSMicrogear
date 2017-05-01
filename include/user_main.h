@@ -4,6 +4,7 @@
 #define INCLUDE_vTaskSuspend 1
 
 #include "uart.h"
+
 #include "Microgear.h"
 #include "ringbuf.h"
 #include "string.h"
@@ -65,6 +66,7 @@
 #define UNSUBSCRIBE "AT+MGUS"																					//AT+MGUS="<TOPIC>"\r
 #define CHAT "AT+MGC"																										//AT+MGC="<ALIAS>","<PAYLOAD>"\r
 #define PULL_MESSAGE "AT+MGPM\r"																					//AT+MGPM \r
+#define PULL_MESSAGE_TO_ARDUINO_LIB "AT+MGPTA\r"												//AT+MGPMTA \r
 #define WRITE_FEED "AT+MGWF"																					//AT+MGWF=<MODE>,"<FEEDNAME>","<DATA>","<API KEY>"\r
 
 //AT+MGWF 0,"MicrogearShield","{Temp:12}"

@@ -1,6 +1,7 @@
 #include "user_main.h"
 #include "setup_task.h"
 
+
 extern xQueueHandle setup_queue;
 
 void setup_task(void *pvParameters) {
@@ -32,7 +33,23 @@ void setup_task(void *pvParameters) {
 }
 
 	void setpushmode(int n){
-		if(echo_mode==1) os_printf("%s=%d\n",PUSHMODE,n);
+		if(echo_mode==1){
+			//~ char msg[30];
+			//~ strcat(msg,PUSHMODE);
+			//~ strcat(msg,"=");
+			//~ strcat(msg,(char*)n);
+			//~ strcat(msg,"\n");
+			//~ uart0_puts(msg);
+			
+			uart0_puts(PUSHMODE);
+			 uart0_puts("=");
+			 char d[1];
+			 sprintf(d,"%d", n);
+			 uart0_puts(d);
+			 uart0_puts("\r\n");
+			  //~ os_printf("\r\n");
+		 }
+		 
 		push_mode = n;
 		 //~ switch (push_mode){
 			//~ case 0: os_printf("Push mode: 0\n"); break;
@@ -41,7 +58,15 @@ void setup_task(void *pvParameters) {
 	}
 	
 	void setechomode(int n){
-		if(echo_mode==1) os_printf("%s=%d\n",ECHOMODE,n);
+		if(echo_mode==1){
+			uart0_puts(ECHOMODE);
+			 uart0_puts("=");
+			 char d[1];
+			 sprintf(d,"%d", n);
+			 uart0_puts(d);
+			 uart0_puts("\r\n");
+			
+			}
 		echo_mode = n;
 		//~ switch (echo_mode){
 			//~ case 0: os_printf("Echo mode: 0\n"); break;

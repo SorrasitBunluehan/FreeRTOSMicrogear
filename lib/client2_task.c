@@ -135,18 +135,19 @@ void read_arduino2(int sending_bytes){
 	char c;
 	int buffer_ele = client2_buf->numElements(client2_buf);
 	if(buffer_ele != 0){
-		os_printf("%c",162);
+		uart0_putchar(162);
 		if(buffer_ele > sending_bytes){
-			 os_printf("%c",sending_bytes);
+			  uart0_putchar((char)sending_bytes);
 			for(x = 0;x<sending_bytes;x++){   					
 					client2_buf->pull(client2_buf,&c);
-					os_printf("%c",c);
+					uart0_putchar(c);
 			}
 		}else {
-			os_printf("%c",buffer_ele);				
+			uart0_putchar((char)buffer_ele);
+			//~ os_printf("%c",buffer_ele);				
 			for(x = 0;x<buffer_ele;x++){   																
 					client2_buf->pull(client2_buf,&c);
-					os_printf("%c",c);
+					uart0_putchar(c);
 			}
 		}
 	}	

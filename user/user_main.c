@@ -63,7 +63,7 @@ void read_sr(void *pvParameters) {
 				
 				if(strcmp(comm,CONNECT_TO_NETPIE)==0 ||  strcmp(comm,DISCONNECT_FROM_NETPIE)==0 || 
 				strcmp(comm,CONFIG_MICROGEAR)==0 || strcmp(comm,SET_ALIAS_NAME)==0 || strcmp(comm,PUBLISH)==0 || strcmp(comm,SUBSCRIBE)==0 || 
-				strcmp(comm,UNSUBSCRIBE)==0 || strcmp(comm,CHAT)==0 || strcmp(comm,PULL_MESSAGE)==0 || strcmp(comm,WRITE_FEED)==0 )
+				strcmp(comm,UNSUBSCRIBE)==0 || strcmp(comm,CHAT)==0 || strcmp(comm,PULL_MESSAGE)==0 || strcmp(comm,WRITE_FEED)==0 || strcmp(comm,PULL_MESSAGE_TO_ARDUINO_LIB)==0)
 				{
 					for(i=0; i< message_index; i ++){	
 						xQueueSend( microgear_queue,&message_sr[i] ,0);
@@ -71,7 +71,7 @@ void read_sr(void *pvParameters) {
 				}
 				
 				if(strcmp(message_sr,"write task\r")==0){
-					os_printf("Inside write loop");
+					//~ os_printf("Inside write loop");
 					for(i=0; i< message_index; i ++){	
 						xQueueSend( write_queue,&message_sr[i] ,0);
 					}
@@ -105,12 +105,24 @@ void ICACHE_FLASH_ATTR user_init(void) {
    
     //~ //////////* Uart init *//////////
     uart_param_t para;
-	para.uart_baud_rate = UART_BAUD_RATE_9600;
+	para.uart_baud_rate = UART_BAUD_RATE_57600;
 	para.uart_xfer_bit = UART_XFER_8_BIT;
 	para.uart_parity_mode = UART_PARITY_NONE;
 	para.uart_stop_bit = UART_1_STOP_BIT;
 	para.uart_flow_ctrl = UART_NONE_FLOW_CTRL;
 	uart0_init(&para);
+	
+	
+//~ UART_ConfigTypeDef uart_config;
+//~ uart_config.baud_rate = BIT_RATE_115200;
+//~ uart_config.data_bits = UART_WordLength_8b;
+//~ uart_config.parity = USART_Parity_None;
+//~ uart_config.stop_bits = USART_StopBits_1;
+//~ uart_config.flow_ctrl = USART_HardwareFlowControl_None;
+//~ uart_config.UART_RxFlowThresh = 120;
+//~ uart_config.UART_InverseMask = UART_None_Inverse;
+//~ UART_ParamConfig(UART1, &uart_config);
+//~ UART_SetPrintPort(UART1);
 	
 
 	
