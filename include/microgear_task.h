@@ -36,6 +36,7 @@ void onMsghandler(char *topic, uint8_t* msg, uint16_t msglen);
 void microgear_task(void *pvParameters);
 
 void mg_connect();
+void mg_status();
 //~ void setup_token(char* token,char* token_secret);
 void config_netpie(char* appid_fn, char*key, char*secret, char* alias, char* token,char* token_secret);
 void mg_disconn();

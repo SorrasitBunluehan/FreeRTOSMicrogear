@@ -63,7 +63,9 @@ void read_sr(void *pvParameters) {
 				
 				if(strcmp(comm,CONNECT_TO_NETPIE)==0 ||  strcmp(comm,DISCONNECT_FROM_NETPIE)==0 || 
 				strcmp(comm,CONFIG_MICROGEAR)==0 || strcmp(comm,SET_ALIAS_NAME)==0 || strcmp(comm,PUBLISH)==0 || strcmp(comm,SUBSCRIBE)==0 || 
-				strcmp(comm,UNSUBSCRIBE)==0 || strcmp(comm,CHAT)==0 || strcmp(comm,PULL_MESSAGE)==0 || strcmp(comm,WRITE_FEED)==0 || strcmp(comm,PULL_MESSAGE_TO_ARDUINO_LIB)==0)
+				strcmp(comm,UNSUBSCRIBE)==0 || strcmp(comm,CHAT)==0 || strcmp(comm,PULL_MESSAGE)==0 || strcmp(comm,WRITE_FEED)==0 || 
+				strcmp(comm,PULL_MESSAGE_TO_ARDUINO_LIB)==0 || strcmp(comm,MG_CHECKSTATUS)==0)
+				
 				{
 					for(i=0; i< message_index; i ++){	
 						xQueueSend( microgear_queue,&message_sr[i] ,0);

@@ -56,7 +56,7 @@
 
 //Microgear task
 #define CONNECT_TO_NETPIE "AT+MGCN\r"																		//AT+MGCN\r
-
+#define MG_CHECKSTATUS "AT+MGCN?\r"  																			//AT+MGCN?
 #define DISCONNECT_FROM_NETPIE "AT+MGDC\r"															//AT+MGDC\r
 #define SETUP_TOKEN "AT+MGST"																					//AT+MGST="d4Y9Jl5vk1p1hWfM","ZRnOjRgpCEkK2mSlowI8zjQpqILpf7wI"\r
 #define CONFIG_MICROGEAR "AT+MGCF"																				//AT+MGCF="HelloNetpie1","YhtHPvlmMxL5yJB","YphWgyUI31q8sEMu6qtNrIPn1","Light_control"\r

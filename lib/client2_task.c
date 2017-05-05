@@ -84,13 +84,13 @@ void disconn2(){
 void status2(){
 	if(echo_mode==1) os_printf("%s \n",CHECKSTATUS_CLIENT2	);
 	switch(conn2.state){
-		case ESPCONN_CONNECT: os_printf("OK\n"); break;
-		case ESPCONN_NONE: os_printf("NONE\n"); break;
-		case ESPCONN_LISTEN: os_printf("LISTENING\n"); break;
-		case ESPCONN_WAIT: os_printf("WAITING\n"); break;
-		case ESPCONN_WRITE: os_printf("WRITING\n"); break;
-		case ESPCONN_READ: os_printf("READING\n"); break;
-		case ESPCONN_CLOSE: os_printf("NOT CONNECTED\n"); break;
+		case ESPCONN_CONNECT: uart0_puts("OK\r\n"); break;
+		case ESPCONN_NONE: uart0_puts("NONE\r\n"); break;
+		case ESPCONN_LISTEN: uart0_puts("LISTENING\r\n"); break;
+		case ESPCONN_WAIT: uart0_puts("WAITING\r\n"); break;
+		case ESPCONN_WRITE: uart0_puts("WRITING\r\n"); break;
+		case ESPCONN_READ: uart0_puts("READING\r\n"); break;
+		case ESPCONN_CLOSE: uart0_puts("NOT CONNECTED\r\n"); break;
 	}
 }
 
@@ -124,7 +124,7 @@ void print2(char* payload){
 		}
 		//~ os_printf("Index: %d",index);
 		if(!(espconn_send(&conn2,payload,index))){
-			os_printf("OK\n");				
+			uart0_puts("OK\r\n");				
 		}else{
 			os_printf("ERROR\n");
 		}
@@ -150,6 +150,8 @@ void read_arduino2(int sending_bytes){
 					uart0_putchar(c);
 			}
 		}
+	}else{
+		uart0_putchar(176);
 	}	
 }
 
@@ -161,7 +163,7 @@ void recv_cb2(void *arg, char *pData, unsigned short len){
 }
 
 void connectCB2(void *arg) {
-	os_printf("OK\n");
+	uart0_puts("OK\r\n");
 }
 
 void errorCB2(void *arg, sint8 err) {

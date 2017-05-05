@@ -5,7 +5,7 @@ extern xQueueHandle microgear_queue;
 
 
 void onConnected(char *attribute, uint8_t* msg, uint16_t msglen) {
-    os_printf("OK\n"); 
+    uart0_puts("OK\r\n"); 
 }
 
 //~ /*	<|NETPIE ON MESSAGE HANDLER CALLBACK|> */
@@ -60,6 +60,7 @@ void microgear_task(void *pvParameters) {
 					if(strcmp(comm,PULL_MESSAGE)==0)	mg_pull_buf();	
 					if(strcmp(comm,PULL_MESSAGE_TO_ARDUINO_LIB)==0) mg_pull_buf_to_arduino();	
 					if(strcmp(comm,WRITE_FEED)==0)mg_writefeed(argInt(1,mg_argv), argString(2,mg_argv), argString(3,mg_argv), argString(4,mg_argv));
+					if(strcmp(comm,MG_CHECKSTATUS)==0)mg_status();	
 					
 				}else{
 					mg_buffer[mg_index] = *(char*)buf3;
@@ -80,10 +81,16 @@ void mg_connect(){
 	
 }
 
-//~ void setup_token(char* token,char* token_secret){
+void mg_status(){
+	if(echo_mode== 1) os_printf("%s,\n",MG_CHECKSTATUS);
+	if(microgear_isConnected (&mg)){
+		uart0_puts("OK\r\n"); 
+	}else{
+		uart0_puts("NOT CONNECTED\r\n"); 
+	}
 	
-	//~ microgear_setToken(&mg, TOKEN, TOKENSECRET, NULL);
-//~ }
+}
+
 
 void config_netpie(char* appid_fn, char*key, char*secret, char* alias, char* token,char* token_secret){
 	if(echo_mode==1) os_printf("%s=\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n",CONFIG_MICROGEAR,appid_fn,key,secret,alias,token,token_secret);
@@ -156,9 +163,17 @@ void mg_pull_buf_to_arduino(){
 		strcat(msgn,str_pull.topic);
 		strcat(msgn,":");
 		strcat(msgn,str_pull.msg);
+		strcat(msgn,"\r");
 		
+		int loop_count=0;
+		while((int)msgn[loop_count]!=10){
+				loop_count++;
+		}
+		//~ os_printf("loop count: %d",loop_count);
 		uart0_putchar((char)sizeof(msgn));
 		uart0_puts(msgn);
+	}else{
+		uart0_putchar(176);
 	}
 }
 
