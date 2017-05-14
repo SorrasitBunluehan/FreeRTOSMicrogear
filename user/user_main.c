@@ -107,7 +107,7 @@ void ICACHE_FLASH_ATTR user_init(void) {
    
     //~ //////////* Uart init *//////////
     uart_param_t para;
-	para.uart_baud_rate = UART_BAUD_RATE_57600;
+	para.uart_baud_rate = UART_BAUD_RATE_9600;
 	para.uart_xfer_bit = UART_XFER_8_BIT;
 	para.uart_parity_mode = UART_PARITY_NONE;
 	para.uart_stop_bit = UART_1_STOP_BIT;

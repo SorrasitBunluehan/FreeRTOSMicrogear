@@ -125,11 +125,12 @@ void mg_unscribe(char* topic){
 }
 
 void mg_writefeed(int feedmode, char* feedname, char* feeddata, char* apikey){
-	if(echo_mode==1) os_printf("%s=\"%s\",\"%s\",\"%s\",\"%s\"\n",WRITE_FEED,feedmode,feedname,feeddata,apikey);
+	if(echo_mode==1) os_printf("%s=\"%d\",\"%s\",\"%s\",\"%s\"\n",WRITE_FEED,feedmode,feedname,feeddata,apikey);
 		feed_buff[0] = '\0';
 		strcpy(feed_buff,"/@writefeed/");
 		strcat(feed_buff,feedname);
 		if(feedmode){
+			os_printf("inside feedmode =1");
 			 strcat(feed_buff,"/"); strcat(feed_buff,apikey);
 		 }
 		microgear_publish(&mg, feed_buff, feeddata, NULL);

@@ -145,6 +145,7 @@ void read_arduino1(int sending_bytes){
 			for(x = 0;x<sending_bytes;x++){   					
 					client1_buf->pull(client1_buf,&c);
 					uart0_putchar(c);
+					//~ vTaskDelay(1/ portTICK_RATE_MS);
 			}
 		}else {
 			//~ os_printf("%c",32| buffer_ele);	
