@@ -1,13 +1,13 @@
 # ESP8266 MICROGEAR SHIELD
 
-This is ESP8266 Firmware base on FREERTOS SDK. 
+This is ESP8266 Firmware based on FREERTOS SDK. 
 
 Main objective is to build hardware microgear board to support NETPIE IOT platform and to liberate microgear from various platform compatible issue.
 
 You can find latest version of FREERTOS SDK here -> [Espressif FreeRTOS](https://github.com/espressif/ESP8266_RTOS_SDK)
 
 
-To use this board effectively used it with NETPIE IOT Platform -> [Netpie platform](https://netpie.io/)
+To use this board effectively use it with NETPIE IoT Platform -> [Netpie platform](https://netpie.io/)
 
 ## Features
 
@@ -26,7 +26,7 @@ To use this board effectively used it with NETPIE IOT Platform -> [Netpie platfo
 **5. TCP MODULE:**
 - **Support multiple connection (up to 2 clients)**
 - Support ALL mandatory functions eg.connect, print, flush 
-- Easy to used API
+- Easy to use API
 
 ## Installations
 
@@ -44,4 +44,4 @@ make flash
 ```
 ## Circumstance
 
-   **1. Baud rate have to be 9600 due to the uncertainty of serial communication**
+   **1. Baud rate has to be 9600 due to the uncertainty of serial communication**
