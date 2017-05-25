@@ -18,15 +18,15 @@ To use this board effectively used it with NETPIE IOT Platform -> [Netpie platfo
 **3. Support Library Arduino Mega & Uno**
 
 **4. MQTT MODULE (Only Netpie compatible):**
-    - Subscribing
-    - Publish up to 1024 Bytes
-    - Key, Secret and Token Authentication
-    - Easy to setup and use
+- Subscribing
+- Publish up to 1024 Bytes
+- Key, Secret and Token Authentication
+- Easy to setup and use
     
 **5. TCP MODULE:**
-    - **Support multiple connection (up to 2 clients)**
-    - Support ALL mandatory functions eg.connect, print, flush 
-    - Easy to used API
+- **Support multiple connection (up to 2 clients)**
+- Support ALL mandatory functions eg.connect, print, flush 
+- Easy to used API
 
 ## Installations
 
