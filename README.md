@@ -11,6 +11,8 @@ To use this board effectively used it with NETPIE IOT Platform -> [Netpie platfo
 
 ### Features
 
+============================================================
+
 1. Real time base firmware 
 2. Stand alone base on **AT COMMAND**
 3. Support Library Arduino Mega & Uno
@@ -20,12 +22,13 @@ To use this board effectively used it with NETPIE IOT Platform -> [Netpie platfo
     - Key, Secret and Token Authentication
     - Easy to setup and use
 5. TCP MODULE:
-    - ** Support multiple connection (up to 2 clients) **
+    - **Support multiple connection (up to 2 clients)**
     - Support ALL mandatory functions eg.connect, print, flush 
     - Easy to used API
 
 ### Installations
 
+============================================================
 **1. Clone this project:**
 ```bash
 git clone https://github.com/moun1234/Microgear-Shield-RTOS
