@@ -16,7 +16,7 @@ To use this board effectively used it with NETPIE IOT Platform -> [Netpie platfo
 3. Support Library Arduino Mega & Uno
 4. MQTT MODULE (Only Netpie compatible):
     - Subscribing
-    - Publish up top 1024 Bytes
+    - Publish up to 1024 Bytes
     - Key, Secret and Token Authentication
     - Easy to setup and use
 5. TCP MODULE:
