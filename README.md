@@ -26,7 +26,7 @@ To use this board effectively used it with NETPIE IOT Platform -> [Netpie platfo
 
 ## Installations
 
-**1. Install a [toolchain](https://github.com/esp8266/esp8266-wiki/wiki/Toolchain):**
+**1. Install a [toolchain](https://github.com/esp8266/esp8266-wiki/wiki/Toolchain)**
 
 **2. Clone this project:**
 ```
@@ -39,5 +39,5 @@ make
 make flash
 ```
 ## Circumstance
-``````
-    1.Baud rate have to be 9600 due to the uncertainty of serial communication
+
+   1.Baud rate have to be 9600 due to the uncertainty of serial communication
