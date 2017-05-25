@@ -26,12 +26,13 @@ To use this board effectively used it with NETPIE IOT Platform -> [Netpie platfo
 
 ## Installations
 
-**1. Clone this project:**
+**1. Install the [toolchain](https://github.com/esp8266/esp8266-wiki/wiki/Toolchain):**
+**2. Clone this project:**
 ```bash
 git clone https://github.com/moun1234/Microgear-Shield-RTOS
-cd espduino
 ```
-**2. FLASH TO ESP8266 USING MAKE:**
+**3. FLASH TO ESP8266 USING _MAKE COMMAND_ OR [ESPTOOL](https://github.com/espressif/esptool):**
+
 
 
 
