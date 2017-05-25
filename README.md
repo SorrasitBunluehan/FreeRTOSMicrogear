@@ -29,26 +29,15 @@ To use this board effectively used it with NETPIE IOT Platform -> [Netpie platfo
 **1. Install a [toolchain](https://github.com/esp8266/esp8266-wiki/wiki/Toolchain):**
 
 **2. Clone this project:**
-```bash
+```
 git clone https://github.com/moun1234/Microgear-Shield-RTOS
 ```
 **3. Enter the directory and flash TO ESP8266 USING _MAKE COMMAND_ OR [ESPTOOL](https://github.com/espressif/esptool):**
-```bash
+```
 make clean
 make 
 make flash
 ```
 ## Circumstance
-
+``````
     1.Baud rate have to be 9600 due to the uncertainty of serial communication
-
-
-
-
-
-
-
-
-
-# FreeRTOSMicrogear
-# FreeRTOSMicrogear
