@@ -11,15 +11,19 @@ To use this board effectively used it with NETPIE IOT Platform -> [Netpie platfo
 
 ## Features
 
-** 1. Real time base firmware **
-** 2. Stand alone base on **AT COMMAND** **
-** 3. Support Library Arduino Mega & Uno **
-** 4. MQTT MODULE (Only Netpie compatible): **
+**1. Real time base firmware**
+
+**2. Stand alone base on **AT COMMAND****
+
+**3. Support Library Arduino Mega & Uno**
+
+**4. MQTT MODULE (Only Netpie compatible):**
     - Subscribing
     - Publish up to 1024 Bytes
     - Key, Secret and Token Authentication
     - Easy to setup and use
-** 5. TCP MODULE: **
+    
+**5. TCP MODULE:**
     - **Support multiple connection (up to 2 clients)**
     - Support ALL mandatory functions eg.connect, print, flush 
     - Easy to used API
