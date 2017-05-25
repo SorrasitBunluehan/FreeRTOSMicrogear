@@ -33,6 +33,11 @@ To use this board effectively used it with NETPIE IOT Platform -> [Netpie platfo
 git clone https://github.com/moun1234/Microgear-Shield-RTOS
 ```
 **3. FLASH TO ESP8266 USING _MAKE COMMAND_ OR [ESPTOOL](https://github.com/espressif/esptool):**
+```bash
+make clean
+make 
+make flash
+```
 
 
 
