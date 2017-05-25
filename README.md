@@ -26,7 +26,8 @@ To use this board effectively used it with NETPIE IOT Platform -> [Netpie platfo
 
 ## Installations
 
-**1. Install the [toolchain](https://github.com/esp8266/esp8266-wiki/wiki/Toolchain):**
+**1. Install a [toolchain](https://github.com/esp8266/esp8266-wiki/wiki/Toolchain):**
+
 **2. Clone this project:**
 ```bash
 git clone https://github.com/moun1234/Microgear-Shield-RTOS
