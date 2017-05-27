@@ -9,6 +9,8 @@ You can find latest version of FREERTOS SDK here -> [Espressif FreeRTOS](https:/
 
 To use this board effectively use it with NETPIE IoT Platform -> [Netpie platform](https://netpie.io/)
 
+**_Please Check on wiki page for API DOC!!!_**
+
 ## Features
 
 **1. Real time base firmware**
