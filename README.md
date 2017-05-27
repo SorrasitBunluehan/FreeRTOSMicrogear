@@ -17,7 +17,7 @@ To use this board effectively use it with NETPIE IoT Platform -> [Netpie platfor
 
 **2. 2 modes support (Standalone and MCU-compatible) with **AT COMMAND Based****
 
-**3. Support Library Arduino Mega & Uno**
+**3. Support Library Arduino Mega, Uno and other MCU**
 
 **4. MQTT MODULE (Only Netpie compatible):**
 - Subscribing
