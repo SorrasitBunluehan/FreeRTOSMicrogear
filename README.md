@@ -34,11 +34,13 @@ To use this board effectively use it with NETPIE IoT Platform -> [Netpie platfor
 
 **1. Install a [toolchain](https://github.com/esp8266/esp8266-wiki/wiki/Toolchain)**
 
-**2. Clone this project:**
+**2. Install [FreeRTOS](https://github.com/espressif/ESP8266_RTOS_SDK)
+
+**3. Clone this project:**
 ```
 git clone https://github.com/moun1234/Microgear-Shield-RTOS
 ```
-**3. Enter the directory and flash TO ESP8266 USING _MAKE COMMAND_ OR [ESPTOOL](https://github.com/espressif/esptool):**
+**4. Enter the directory and flash TO ESP8266 USING _MAKE COMMAND_ OR [ESPTOOL](https://github.com/espressif/esptool):**
 ```
 make clean
 make 
